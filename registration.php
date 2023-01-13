@@ -61,7 +61,7 @@
 					<h2 class="title-head">Student <span>Registration</span></h2>
 					<p>Login Your Account <a href="login.php">Click here</a></p>
 				</div>	
-				<form class="contact-bx" method="POST" enctype="multipart/form-data">
+				<form class="contact-bx" action="" method="POST" enctype="multipart/form-data">
 					<div class="row placeani">
 						<div class="col-lg-12">
 							<div class="form-group">
@@ -168,7 +168,6 @@
 <script src="assets/vendors/owl-carousel/owl.carousel.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="assets/js/contact.js"></script>
-<script src='assets/vendors/switcher/switcher.js'></script>
 </body>
 
 </html>

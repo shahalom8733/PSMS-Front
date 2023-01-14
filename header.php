@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,8 +71,12 @@
 					</div>
 					<div class="topbar-right">
 						<ul>
+							<?php if(isset($_SESSION['user'])) : ?>
+							<li><a href="dashboard/index.php">Student_Dashboard</a></li>
+							<?php else : ?>
 							<li><a href="login.php">Login</a></li>
 							<li><a href="registration.php">Register</a></li>
+							<?php endif; ?>
 						</ul>
 					</div>
 				</div>

@@ -1,3 +1,43 @@
+<?php 
+
+	require_once("config.php");
+	session_start();
+	if(isset($_POST['submit'])){
+		$users = $_POST['users'];
+		$password = $_POST['password'];
+		if(empty($users)){
+			$err = "Insert Valide Email Or mobile";
+		}
+		else if(empty($password)){
+			$err = "Password is required";
+		}
+		else{
+
+			$password = sha1($password);
+			$stmt = $conn->prepare("SELECT id,name,email,mobile,password FROM students WHERE (email=? OR mobile=?) AND password=?");
+			$stmt->execute(array($users,$users,$password));
+			 $count = $stmt -> rowCount();
+			 if($count == 1){
+				$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				$session = $_SESSION['user'] = $data;
+				header("location:dashboard/index.php");
+			 }
+			 else{
+				$err = "Your email, mobile, and password is wrong";
+			 }
+		}
+
+	}
+	if(isset($_SESSION['user'])){
+		header("location:dashboard/index.php");
+	}
+
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -64,6 +104,11 @@
 				</div>	
 				<form class="contact-bx" action="" method="POST">
 					<div class="row placeani">
+						<div class="col-lg-12">
+							<?php if(isset($err)) :?>
+								<div class="alert alert-warning"><?php echo $err; ?></div>
+							<?php endif; ?>
+						</div>
 						<div class="col-lg-12">
 							<div class="form-group">
 								<div class="input-group">

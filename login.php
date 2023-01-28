@@ -2,9 +2,13 @@
 
 	require_once("config.php");
 	session_start();
+
+
 	if(isset($_POST['submit'])){
+		
 		$users = $_POST['users'];
 		$password = $_POST['password'];
+
 		if(empty($users)){
 			$err = "Insert Valide Email Or mobile";
 		}
@@ -19,8 +23,17 @@
 			 $count = $stmt -> rowCount();
 			 if($count == 1){
 				$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-				$session = $_SESSION['user'] = $data;
-				header("location:dashboard/index.php");
+				$_SESSION['user'] = $data;
+			    $is_email_verified = Shahalom("is_email_verified", $_SESSION['user'][0]['id']);
+				$is_mobile_vefified = Shahalom("is_mobile_verified", $_SESSION['user'][0]['id']);
+				if($is_email_verified == 1 AND  $is_mobile_vefified == 1){
+
+					header("location:dashboard/index.php");
+				}
+				else{
+					header("location:verified.php");
+				}
+				
 			 }
 			 else{
 				$err = "Your email, mobile, and password is wrong";
@@ -28,12 +41,18 @@
 		}
 
 	}
-	if(isset($_SESSION['user'])){
-		header("location:dashboard/index.php");
-	}
+   
 
 ?>
+<!--
+User: codesnhq_psms_websites
 
+Database: codesnhq_psms_websites
+password:  MxND@[Y*I~pM
+
+
+
+-->
 
 
 
